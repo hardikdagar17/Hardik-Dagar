@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini GitHub Clone</title>
+
+<style>
+/* ====== GLOBAL ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #0d1117;
+  color: #c9d1d9;
+}
+
+/* ====== NAVBAR ====== */
+.navbar {
+  background: #161b22;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+.search-box input {
+  padding: 6px 10px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  color: white;
+  border-radius: 6px;
+}
+
+.nav-right a {
+  color: #c9d1d9;
+  margin-left: 15px;
+  text-decoration: none;
+}
+
+.nav-right a:hover {
+  color: white;
+}
+
+/* ====== LAYOUT ====== */
+.container {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* ====== SIDEBAR ====== */
+.sidebar {
+  width: 25%;
+  background: #161b22;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.profile-img {
+  width: 100px;
+  border-radius: 50%;
+}
+
+.username {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.bio {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #8b949e;
+}
+
+/* ====== REPOS ====== */
+.repo-section {
+  width: 75%;
+}
+
+.repo-card {
+  background: #161b22;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #30363d;
+  transition: 0.3s;
+}
+
+.repo-card:hover {
+  border-color: #58a6ff;
+}
+
+.repo-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #58a6ff;
+}
+
+.repo-desc {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #8b949e;
+}
+
+.repo-footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.star-btn {
+  background: #21262d;
+  color: white;
+  border: 1px solid #30363d;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.star-btn:hover {
+  background: #30363d;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+  <div class="nav-left">
+    <div class="logo">MyGit</div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search repositories...">
+    </div>
+  </div>
+  <div class="nav-right">
+    <a href="#">Pull Requests</a>
+    <a href="#">Issues</a>
+    <a href="#">Marketplace</a>
+  </div>
+</div>
+
+<!-- ===== MAIN CONTAINER ===== -->
+<div class="container">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <img src="https://via.placeholder.com/100" class="profile-img">
+    <div class="username">Hardik Dagar</div>
+    <div class="bio">Frontend Developer | Open Source Enthusiast</div>
+  </div>
+
+  <!-- Repository Section -->
+  <div class="repo-section" id="repoList">
+
+    <div class="repo-card">
+      <div class="repo-name">DSA-Programs</div>
+      <div class="repo-desc">Data Structures and Algorithms practice codes.</div>
+      <div class="repo-footer">
+        <span>⭐ <span class="star-count">5</span></span>
+        <button class="star-btn">Star</button>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-name">OOP-Concepts</div>
+      <div class="repo-desc">Object Oriented Programming examples.</div>
+      <div class="repo-footer">
+        <span>⭐ <span class="star-count">8</span></span>
+        <button class="star-btn">Star</button>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-name">Web-Projects</div>
+      <div class="repo-desc">HTML, CSS and JavaScript mini projects.</div>
+      <div class="repo-footer">
+        <span>⭐ <span class="star-count">12</span></span>
+        <button class="star-btn">Star</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// Star Button Function
+document.querySelectorAll(".star-btn").forEach(button => {
+  button.addEventListener("click", function() {
+    let starCount = this.parentElement.querySelector(".star-count");
+    starCount.textContent = parseInt(starCount.textContent) + 1;
+  });
+});
+
+// Search Function
+document.getElementById("searchInput").addEventListener("keyup", function() {
+  let filter = this.value.toLowerCase();
+  let repos = document.querySelectorAll(".repo-card");
+
+  repos.forEach(repo => {
+    let name = repo.querySelector(".repo-name").textContent.toLowerCase();
+    if (name.includes(filter)) {
+      repo.style.display = "block";
+    } else {
+      repo.style.display = "none";
+    }
+  });
+});
+</script>
+
+</body>
+</html>
