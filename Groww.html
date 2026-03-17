@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Groww-like — Demo UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724; /* dark navy */
+      --card:#0b1220;
+      --muted:#94a3b8;
+      --accent:#12b981; /* green */
+      --danger:#ff6b6b;
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.02);
+      --text:#e6eef8;
+      --radius:12px;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0; background:linear-gradient(180deg,#071428 0%,#071726 50%); color:var(--text); font-size:14px; -webkit-font-smoothing:antialiased;
+      padding:24px;
+    }
+    .app{
+      display:grid; grid-template-columns:260px 1fr; gap:20px; max-width:1200px; margin:0 auto; align-items:start;
+    }
+
+    /* SIDEBAR */
+    .sidebar{background:var(--card); border-radius:var(--radius); padding:18px; box-shadow: 0 6px 18px rgba(4,6,12,0.6); height:calc(100vh - 48px); position:sticky; top:24px; overflow:auto}
+    .logo{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+    .logo .icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#06a3ff);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .nav{display:flex;flex-direction:column;gap:6px}
+    .nav a{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;color:var(--muted);text-decoration:none}
+    .nav a.active, .nav a:hover{background:var(--glass); color:var(--text)}
+    .small{font-size:12px;color:var(--muted)}
+
+    /* MAIN */
+    main{display:flex;flex-direction:column;gap:18px}
+    .topbar{display:flex;justify-content:space-between;align-items:center}
+    .search{display:flex;gap:12px;align-items:center}
+    .search input{background:var(--glass);border:1px solid rgba(255,255,255,0.03);padding:10px 12px;border-radius:10px;color:var(--text);min-width:260px}
+
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .card{background:linear-gradient(180deg,var(--card),#06101a);padding:16px;border-radius:16px;box-shadow:0 6px 20px rgba(2,6,12,0.6)}
+    .card h3{margin:0;font-size:12px;color:var(--muted)}
+    .balance{font-size:22px;font-weight:700;margin-top:8px}
+    .small-muted{color:var(--muted);font-size:12px}
+
+    /* MARKET LIST */
+    .market{display:grid;grid-template-columns:1fr 120px 110px;gap:10px;align-items:center;padding:12px;border-radius:10px}
+    .market + .market{margin-top:8px}
+    .ticker{display:flex;gap:10px;align-items:center}
+    .avatar{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#334155,#1f2937);display:flex;justify-content:center;align-items:center;font-weight:700}
+    .price{font-weight:600}
+    .up{color:var(--accent)}
+    .down{color:var(--danger)}
+
+    /* HOLDINGS & WATCHLIST */
+    .grid-2{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .table{background:var(--glass-2);padding:12px;border-radius:12px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:8px;text-align:left}
+    th{color:var(--muted);font-size:12px}
+
+    /* CHART */
+    .chart{height:130px;background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);border-radius:10px;padding:12px}
+    .legend{display:flex;gap:8px;align-items:center}
+    .dot{width:10px;height:10px;border-radius:50%}
+
+    /* FOOTER small */
+    .muted-center{text-align:center;color:var(--muted);font-size:13px;padding:10px}
+
+    /* RESPONSIVE */
+    @media (max-width:980px){
+      .app{grid-template-columns:1fr; padding:12px}
+      .sidebar{height:auto;position:relative}
+      .cards{grid-template-columns:repeat(2,1fr)}
+      .grid-2{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="icon">G</div>
+        <div>
+          <div style="font-weight:700">Groww — Demo</div>
+          <div class="small">Investing UI clone</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#" class="active">Dashboard</a>
+        <a href="#">Explore</a>
+        <a href="#">Portfolio</a>
+        <a href="#">Orders</a>
+        <a href="#">Mutual Funds</a>
+        <a href="#">Profile</a>
+      </nav>
+
+      <div style="margin-top:18px">
+        <div class="small" style="margin-bottom:8px">Account</div>
+        <div class="card" style="padding:12px">
+          <div class="small-muted">Total balance</div>
+          <div class="balance">₹ 58,421</div>
+          <div class="small-muted" style="margin-top:8px">Invested: ₹ 36,800 &nbsp; • &nbsp; Available: ₹ 21,621</div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px" class="small-muted">Quick links</div>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <button style="background:var(--glass);border:0;padding:8px 10px;border-radius:8px;color:var(--text)">Buy</button>
+        <button style="background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:8px;color:var(--muted)">Sell</button>
+      </div>
+
+      <div style="margin-top:18px" class="small-muted">About</div>
+      <div class="small" style="margin-top:6px">This is a demo frontend — data is static. Use it to prototype dashboards or videos.</div>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <div class="search">
+          <input placeholder="Search stocks, funds, symbols..." />
+        </div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="small-muted">Notifications</div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="text-align:right">
+              <div style="font-weight:700">Hardik</div>
+              <div class="small-muted">Investor</div>
+            </div>
+            <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#334155,#0f1724);display:flex;align-items:center;justify-content:center">HD</div>
+          </div>
+        </div>
+      </div>
+
+      <section class="cards">
+        <div class="card">
+          <h3>Portfolio Value</h3>
+          <div class="balance">₹ 58,421</div>
+          <div class="small-muted">+ ₹ 2,341 today <span class="up">(4.2%)</span></div>
+        </div>
+        <div class="card">
+          <h3>Today's change</h3>
+          <div class="balance up">+₹ 2,341</div>
+          <div class="small-muted">(+4.2%) since market open</div>
+        </div>
+        <div class="card">
+          <h3>Watchlist</h3>
+          <div style="margin-top:8px">
+            <div class="market">
+              <div class="ticker"><div class="avatar">R</div><div>
+                <div style="font-weight:700">RELIANCE</div>
+                <div class="small-muted">NSE • Energy</div>
+              </div></div>
+              <div class="price">₹ 2,640</div>
+              <div class="up">+1.8%</div>
+            </div>
+            <div class="market">
+              <div class="ticker"><div class="avatar">T</div><div>
+                <div style="font-weight:700">TCS</div>
+                <div class="small-muted">NSE • IT</div>
+              </div></div>
+              <div class="price">₹ 3,420</div>
+              <div class="down">-0.4%</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid-2">
+        <div class="table card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div>
+              <div style="font-weight:700">Holdings</div>
+              <div class="small-muted">Your current investments</div>
+            </div>
+            <div class="small-muted">Total invested ₹ 36,800</div>
+          </div>
+
+          <div class="chart" id="miniChart">
+            <!-- simple svg chart -->
+            <svg width="100%" height="100%" viewBox="0 0 300 120" preserveAspectRatio="none">
+              <polyline points="0,90 40,70 80,60 120,50 160,55 200,30 240,40 300,20" fill="none" stroke="url(#g)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+              <defs>
+                <linearGradient id="g" x1="0" x2="1">
+                  <stop offset="0%" stop-color="#06a3ff" />
+                  <stop offset="100%" stop-color="#12b981" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+
+          <table aria-label="holdings-table">
+            <thead>
+              <tr><th>Asset</th><th>Quantity</th><th>Avg. price</th><th>Current</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Reliance</td><td>2</td><td>₹ 2,500</td><td>₹ 2,640</td></tr>
+              <tr><td>TCS</td><td>1</td><td>₹ 3,450</td><td>₹ 3,420</td></tr>
+              <tr><td>HDFC Bank</td><td>3</td><td>₹ 1,260</td><td>₹ 1,290</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <aside class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <div>
+              <div style="font-weight:700">Orders</div>
+              <div class="small-muted">Recent activity</div>
+            </div>
+            <button style="background:transparent;border:1px solid rgba(255,255,255,0.04);padding:6px 10px;border-radius:8px;color:var(--muted)">All orders</button>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">Buy • RELIANCE</div>
+                <div class="small-muted">2 shares • ₹ 5,280</div>
+              </div>
+              <div class="small-muted">11 Nov</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">Buy • HDFC</div>
+                <div class="small-muted">3 shares • ₹ 3,780</div>
+              </div>
+              <div class="small-muted">21 Oct</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px" class="small-muted">Watchlist</div>
+          <div style="margin-top:8px">
+            <div class="market">
+              <div class="ticker"><div class="avatar">A</div><div>
+                <div style="font-weight:700">AXISBANK</div>
+                <div class="small-muted">NSE • Banking</div>
+              </div></div>
+              <div class="price">₹ 720</div>
+              <div class="up">+0.6%</div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <div class="muted-center small-muted">Demo UI — not a real trading app. Do not use for financial decisions.</div>
+    </main>
+  </div>
+
+  <script>
+    // Small interactions (no external data)
+    document.querySelectorAll('.nav a').forEach(a=>{
+      a.addEventListener('click', e=>{document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('active')); a.classList.add('active'); e.preventDefault();})
+    })
+  </script>
+</body>
+</html>
