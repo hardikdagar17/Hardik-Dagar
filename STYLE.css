@@ -1,0 +1,299 @@
+/* ===== GLOBAL RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f4f4f4;
+    color: #333;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: #111;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff9800;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.nav-links a:hover {
+    color: #ff9800;
+}
+
+/* ===== HERO (HOME) ===== */
+/* ===== HOME PAGE BACKGROUND ===== */
+.hero {
+    min-height: 90vh;
+    background-image: 
+        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+        url("STORE image.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    color: white;
+    padding: 20px;
+}
+
+.hero h1 {
+    font-size: 44px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+    max-width: 600px;
+}
+
+.hero .btn {
+    background: #ff9800;
+    color: #111;
+    font-weight: bold;
+}
+
+.hero .btn:hover {
+    background: #e68900;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+    display: inline-block;
+    background: #111;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background: #333;
+}
+
+/* ===== SECTIONS ===== */
+.section {
+    padding: 60px 20px;
+}
+
+.section h2 {
+    text-align: center;
+    font-size: 36px;
+}
+
+/* ===== CARD CONTAINERS ===== */
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+/* ===== CATEGORY CARD (HOME) ===== */
+.card {
+    width: 220px;
+    background: white;
+    padding: 25px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 18px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ===== PRODUCT CARD ===== */
+.product-card {
+    width: 230px;
+    background: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.product-card h3 {
+    margin: 10px 0;
+}
+
+.product-card button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: none;
+    background: #111;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.product-card button:hover {
+    background: #333;
+}
+
+/* ===== LOGIN & SIGNUP ===== */
+.auth-box {
+    max-width: 400px;
+    margin: 80px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.auth-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-box input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.auth-box button {
+    width: 100%;
+    padding: 12px;
+    background: #ff9800;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.auth-box button:hover {
+    background: #e68900;
+}
+
+.auth-box p {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.auth-box a {
+    color: #ff9800;
+    text-decoration: none;
+}
+
+/* ===== CONTACT FORM ===== */
+.contact-form {
+    max-width: 450px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.contact-form textarea {
+    resize: none;
+    height: 120px;
+}
+
+.contact-form button {
+    padding: 12px;
+    background: #111;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    background: #333;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+/* ===== DARK MODE (LOGIN & SIGNUP) ===== */
+#dark-toggle:checked ~ .site {
+    background: #121212;
+    color: #e0e0e0;
+}
+
+#dark-toggle:checked ~ .site .navbar,
+#dark-toggle:checked ~ .site .footer {
+    background: #000;
+}
+
+#dark-toggle:checked ~ .site .auth-box,
+#dark-toggle:checked ~ .site .card,
+#dark-toggle:checked ~ .site .product-card {
+    background: #1e1e1e;
+    color: white;
+}
+
+/* Toggle Switch */
+.toggle-container {
+    display: flex;
+    align-items: center;
+}
+
+.toggle {
+    width: 40px;
+    height: 20px;
+    background: #555;
+    border-radius: 20px;
+    position: relative;
+}
+
+.toggle::after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s;
+}
+
+#dark-toggle:checked + label .toggle::after {
+    transform: translateX(20px);
+}
