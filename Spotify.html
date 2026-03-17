@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spotify-like — Demo UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f12; /* almost black */
+      --panel:#0d1113;
+      --muted:#9aa6b2;
+      --accent:#1db954; /* spotify green */
+      --glass: rgba(255,255,255,0.03);
+      --text:#e6eef8;
+      --radius:12px;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#071018 0%,#071318 100%);color:var(--text);min-height:100vh;padding:18px}
+
+    .app{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:220px 1fr;gap:18px}
+
+    /* SIDEBAR */
+    .sidebar{background:var(--panel);border-radius:14px;padding:18px;height:calc(100vh - 36px);position:sticky;top:18px;overflow:auto}
+    .brand{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+    .brand .logo{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#06a3ff);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .nav{display:flex;flex-direction:column;gap:8px}
+    .nav a{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;color:var(--muted);text-decoration:none}
+    .nav a.active, .nav a:hover{background:var(--glass);color:var(--text)}
+    .playlists{margin-top:16px;display:flex;flex-direction:column;gap:6px}
+    .playlist{font-size:14px;color:var(--muted);padding:6px;border-radius:6px}
+    .playlist:hover{color:var(--text);background:rgba(255,255,255,0.02)}
+
+    /* MAIN */
+    main{display:flex;flex-direction:column;gap:14px}
+    .topbar{display:flex;justify-content:space-between;align-items:center}
+    .search input{background:var(--glass);border:1px solid rgba(255,255,255,0.03);padding:10px 12px;border-radius:999px;color:var(--text);min-width:300px}
+
+    .hero{background:linear-gradient(90deg, rgba(29,185,84,0.06), transparent);padding:18px;border-radius:12px;display:flex;gap:16px;align-items:center}
+    .cover{width:120px;height:120px;border-radius:8px;background:linear-gradient(135deg,#1f2937,#0f1724);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .meta h1{margin:0;font-size:20px}
+    .meta p{margin:6px 0;color:var(--muted)}
+
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:12px}
+    .album-cover{height:140px;border-radius:8px;background:linear-gradient(135deg,#334155,#0f1724);display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:10px}
+    .album-title{font-weight:700}
+    .small{color:var(--muted);font-size:13px}
+
+    .nowplaying{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;width:calc(100% - 36px);max-width:1100px;background:linear-gradient(180deg,#0b1113, rgba(255,255,255,0.02));border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 30px rgba(2,6,12,0.6)}
+    .np-left{display:flex;align-items:center;gap:12px}
+    .np-cover{width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,#334155,#0f1724);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .controls{display:flex;flex-direction:column;flex:1}
+    .controls-top{display:flex;align-items:center;justify-content:space-between}
+    .buttons{display:flex;gap:12px;align-items:center}
+    .btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(255,255,255,0.04)}
+    .play{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--accent);color:#02110a;font-weight:700}
+    .progress{height:6px;background:rgba(255,255,255,0.04);border-radius:999px;margin-top:10px;overflow:hidden}
+    .progress > div{height:100%;width:30%;background:linear-gradient(90deg,var(--accent),#06a3ff)}
+
+    /* Right sidebar mini */
+    .right{background:var(--panel);border-radius:12px;padding:12px;height:calc(100vh - 36px);position:sticky;top:18px}
+    .queue{display:flex;flex-direction:column;gap:8px}
+    .track{display:flex;align-items:center;justify-content:space-between;padding:6px;border-radius:6px}
+    .track:hover{background:rgba(255,255,255,0.02)}
+
+    @media (max-width:980px){
+      .app{grid-template-columns:1fr;}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .right{display:none}
+      .sidebar{height:auto;position:relative}
+      .nowplaying{left:12px;transform:none;width:calc(100% - 24px)}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">S</div><div><div style="font-weight:700">Spotify — Demo</div><div class="small">Music UI clone</div></div></div>
+
+      <nav class="nav">
+        <a href="#" class="active">Home</a>
+        <a href="#">Search</a>
+        <a href="#">Your Library</a>
+      </nav>
+
+      <div class="playlists">
+        <div class="small" style="margin-top:12px;margin-bottom:6px;color:var(--muted)">Playlists</div>
+        <div class="playlist">Chill Hits</div>
+        <div class="playlist">Top 50 — India</div>
+        <div class="playlist">Workout</div>
+        <div class="playlist">Indie Picks</div>
+        <div class="playlist">Focus</div>
+      </div>
+
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <div class="search"><input placeholder="Search for artists, songs, or podcasts" /></div>
+        <div style="display:flex;gap:12px;align-items:center"><div class="small">Premium</div><div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#334155,#0f1724);display:flex;align-items:center;justify-content:center">HD</div></div>
+      </div>
+
+      <section class="hero">
+        <div class="cover">ART</div>
+        <div class="meta">
+          <h1>Good Evening</h1>
+          <p class="small">Recommended playlists and new releases based on your listening.</p>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="card">
+          <div class="album-cover">CHILL</div>
+          <div class="album-title">Chill Vibes</div>
+          <div class="small">Playlist • 45 songs</div>
+        </div>
+        <div class="card">
+          <div class="album-cover">TOP</div>
+          <div class="album-title">Top Hits India</div>
+          <div class="small">Playlist • 50 songs</div>
+        </div>
+        <div class="card">
+          <div class="album-cover">ROCK</div>
+          <div class="album-title">Indie Rock</div>
+          <div class="small">Album • 12 songs</div>
+        </div>
+        <div class="card">
+          <div class="album-cover">POP</div>
+          <div class="album-title">Pop Up</div>
+          <div class="small">Playlist • 30 songs</div>
+        </div>
+      </section>
+
+    </main>
+
+    <aside class="right">
+      <div style="font-weight:700;margin-bottom:8px">Queue</div>
+      <div class="queue">
+        <div class="track"><div><div style="font-weight:700">Song 1</div><div class="small">Artist • 3:24</div></div><div class="small">3:24</div></div>
+        <div class="track"><div><div style="font-weight:700">Song 2</div><div class="small">Artist • 2:58</div></div><div class="small">2:58</div></div>
+        <div class="track"><div><div style="font-weight:700">Song 3</div><div class="small">Artist • 4:05</div></div><div class="small">4:05</div></div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="nowplaying" role="region" aria-label="Now playing">
+    <div class="np-left">
+      <div class="np-cover">CH</div>
+      <div>
+        <div style="font-weight:700">Chill Vibe — Song 1</div>
+        <div class="small">Artist Name</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="controls-top">
+        <div class="buttons">
+          <button class="btn" id="prev">⏮</button>
+          <button class="play" id="play">▶</button>
+          <button class="btn" id="next">⏭</button>
+        </div>
+        <div class="small">0:54 / 3:24</div>
+      </div>
+      <div class="progress" aria-hidden="true"><div id="bar"></div></div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="small">Devices</div>
+      <div class="small">🔊</div>
+    </div>
+  </div>
+
+  <script>
+    // Simple interactivity: nav active and play toggle
+    document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click', e=>{document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('active')); a.classList.add('active'); e.preventDefault()}));
+    document.querySelectorAll('.playlist, .card').forEach(el=>el.addEventListener('click', ()=>{alert('This is a demo UI. Replace with real player or navigation.')}));
+
+    const playBtn = document.getElementById('play');
+    const bar = document.getElementById('bar');
+    let playing = false;
+    let progress = 30;
+    playBtn.addEventListener('click', ()=>{
+      playing = !playing;
+      playBtn.textContent = playing ? '❚❚' : '▶';
+      // fake progress animation
+      if(playing){
+        playInterval = setInterval(()=>{progress = Math.min(100, progress + 1); bar.style.width = progress + '%'; if(progress>=100) { clearInterval(playInterval); playing=false; playBtn.textContent='▶'; }}, 1000);
+      } else { clearInterval(playInterval); }
+    });
+  </script>
+</body>
+</html>
